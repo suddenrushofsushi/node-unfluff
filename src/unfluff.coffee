@@ -2,6 +2,7 @@ cheerio = require("cheerio")
 extractor = require("./extractor")
 cleaner = require("./cleaner")
 
+
 module.exports = unfluff = (html, language) ->
   doc = cheerio.load(html)
   lng = language || extractor.lang(doc)
@@ -30,6 +31,7 @@ module.exports = unfluff = (html, language) ->
   # Step 3: Extract text, videos, images, links
   pageData.videos = extractor.videos(doc, topNode)
   pageData.links = extractor.links(doc, topNode, lng)
+  pageData.all_links = extractor.links(doc, doc("body"), lng)
   pageData.text = extractor.text(doc, topNode, lng)
 
   pageData
@@ -105,6 +107,11 @@ unfluff.lazy = (html, language) ->
     doc = getCleanedDoc.call(this, html)
     topNode = getTopNode.call(this, doc, this.lang())
     @links_ = extractor.links(doc, topNode, this.lang())
+
+  all_links: () ->
+    return @all_links_ if @all_links_?
+    doc = getCleanedDoc.call(this, html)
+    @all_links_ = extractor.links(doc, doc("body"), this.lang())
 
 # Load the doc in cheerio and cache it
 getParsedDoc = (html) ->
