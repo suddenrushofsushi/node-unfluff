@@ -120,7 +120,6 @@ module.exports =
         href = doc(this).attr('href')
         text = doc(this).html()
         dist = doc(this).parentsUntil('body').length
-        console.log(doc(this).closest('a').length)
         if href && text
           links.push({
             text: text,
