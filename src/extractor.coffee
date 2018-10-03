@@ -119,10 +119,16 @@ module.exports =
       nodes.each () ->
         href = doc(this).attr('href')
         text = doc(this).html()
-        dist = doc(this).parentsUntil('body').length
+        pare = doc(this).parentsUntil('body')
+        path = ""
+        pare.each((i, e) -> 
+          path = doc(e).prop("tagName").toLowerCase() + "/" + path
+        )
+        dist = pare.length
         if href && text
           links.push({
             text: text,
+            path: path,
             href: href,
             dist: dist
           })
