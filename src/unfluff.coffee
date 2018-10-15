@@ -20,7 +20,8 @@ module.exports = unfluff = (html, language) ->
     lang: lng
     canonicalLink: extractor.canonicalLink(doc)
     tags: extractor.tags(doc)
-    image: extractor.image(doc)
+    image: extractor.image(doc),
+    all_links: extractor.all_links(doc, doc("body"), lng)
 
   # Step 1: Clean the doc
   cleaner(doc)
@@ -31,7 +32,6 @@ module.exports = unfluff = (html, language) ->
   # Step 3: Extract text, videos, images, links
   pageData.videos = extractor.videos(doc, topNode)
   pageData.links = extractor.links(doc, topNode, lng)
-  pageData.all_links = extractor.links(doc, doc("body"), lng)
   pageData.text = extractor.text(doc, topNode, lng)
 
   pageData

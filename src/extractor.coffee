@@ -138,6 +138,31 @@ module.exports =
       gatherLinks(doc, topNode)
     links
       
+  # Find any links in the doc
+  all_links: (doc, topNode, lang) ->
+    links = []
+    gatherLinks = (doc, topNode) ->
+      nodes = topNode.find('a')
+      nodes.each () ->
+        href = doc(this).attr('href')
+        text = doc(this).html()
+        pare = doc(this).parentsUntil('body')
+        path = ""
+        pare.each((i, e) -> 
+          path = doc(e).prop("tagName").toLowerCase() + "/" + path
+        )
+        dist = pare.length
+        if href
+          links.push({
+            text: text,
+            path: path,
+            href: href,
+            dist: dist
+          })
+      
+    gatherLinks(doc, topNode)
+    links
+      
   # Find any embedded videos in the doc
   videos: (doc, topNode) ->
     videoList = []
