@@ -10,6 +10,7 @@ module.exports = unfluff = (html, language) ->
   pageData =
     title: extractor.title(doc)
     softTitle: extractor.softTitle(doc)
+    rawTitle: extractor.rawTitle(doc)
     date: extractor.date(doc)
     author: extractor.author(doc)
     publisher: extractor.publisher(doc)
@@ -45,6 +46,10 @@ unfluff.lazy = (html, language) ->
   softTitle: () ->
     doc = getParsedDoc.call(this, html)
     @softTitle_ ?= extractor.softTitle(doc)
+
+  rawTitle: () ->
+    doc = getParsedDoc.call(this, html)
+    @rawTitle_ ?= extractor.rawTitle(doc)
 
   date: () ->
     doc = getParsedDoc.call(this, html)

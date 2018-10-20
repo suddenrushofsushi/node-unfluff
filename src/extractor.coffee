@@ -88,6 +88,9 @@ module.exports =
     titleText = rawTitle(doc)
     return cleanTitle(titleText, ["|", " - ", "»"])
 
+  # Grab the title with no truncation
+  rawTitle: (doc) ->
+    return rawTitle(doc)
 
   # Grab the 'main' text chunk
   text: (doc, topNode, lang) ->
